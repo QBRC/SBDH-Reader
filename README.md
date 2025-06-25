@@ -4,7 +4,7 @@ Social and behavioral determinants of health (SBDH) are increasingly recognized 
 
 ## Getting started
 - `conda create -n sbdh_reader python=3.9` creating a new conda env
-- `conda activate mpnn-shared`
+- `conda activate sbdh_reader`
 - `pip install -r requirements.txt` installs specific packages for the wrapper function
 - Note: Compatibility test done on the following Linux systems: `Red Hat Enterprise Linux 7.9`; 
 
@@ -16,4 +16,4 @@ TL;DR: `python example_call.py` runs SBDH-Reader end-to-end, from free text to L
 `caller.py` composes the SBDH categories of interest with a global starter, output specifications, and global finisher.
 
 # Citation
-If you find this work useful, please cite us at TBD.
+If you find this work useful, please cite us: Gu Z, He L, Naeem A, Chan PM, Mohamed A, Khalil H, Guo Y, Shi W, Dupre ME, Xiao G, Peterson ED, Xie Y, Navar AM, Yang DM. SBDH-Reader: an LLM-powered method for extracting social and behavioral determinants of health from medical notes. medRxiv [Preprint] (2025). DOI: 10.1101/2025.02.19.25322576
