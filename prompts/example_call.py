@@ -11,11 +11,11 @@ import caller
 import cats
 
 # Create and Insert credentials in the file: SBDH-LLM/creds/azure_credentials.json
-azure_creds_file = "../../creds/azure_credentials.json"
+azure_creds_file = "../credentials/azure_credentials.json"
     
 with open(azure_creds_file, 'r') as file:
     azure_data = json.load(file)
-    api_key = azure_data['API_KEY']
+    api_key = azure_data['AZURE_OPENAI_KEY']
     api_version = azure_data['API_VERSION']
     azure_endpoint = azure_data['AZURE_ENDPOINT']
     azure_deployment_name = azure_data['AZURE_DEPLOYMENT_NAME']
@@ -34,42 +34,23 @@ azure_client = AzureOpenAI(
 # load and format data
 
 # select categories to extract
-# my_cats_step1 = [cats.housing, cats.employment]
-my_cats_step2 = [cats.employment, cats.alcohol]
+my_cats_step = [cats.employment, cats.alcohol] #options:employment, housing, marital, alcohol, tobacco, drug
 
+print("=======PROMPTS========")
+message_text = caller.get_llm_reader_input_message(free_text = 'Patient is homeless but he has got a steady job at a foodtruck', cats = my_cats_step, print_prompt=True)
 
-message_text = caller.get_llm_step1_input_message(free_text = 'Patient is homeless but he has got a steady job at a foodtruck', cats = my_cats_step2, print_prompt=True)
+# call api
+response = azure_client.chat.completions.create(
+    model=azure_deployment_name,
+    response_format={ "type": "json_object" },
+    messages=message_text,
+    temperature=0,
+    max_tokens=500,
+    top_p=0.95,
+    frequency_penalty=0,
+    presence_penalty=0,
+    stop=None
+    )
 
-print(message_text)
-
-# # call api
-# response = azure_client.chat.completions.create(
-#     model=azure_deployment_name,
-#     response_format={ "type": "json_object" },
-#     messages=message_text,
-#     temperature=0,
-#     max_tokens=50,
-#     top_p=0.95,
-#     frequency_penalty=0,
-#     presence_penalty=0,
-#     stop=None
-#     )
-
-# print(response.choices[0].message.content.strip())
-
-#   response = openai.ChatCompletion.create(
-#     engine=DEPLOYMENT_NAME,
-#     messages = message_text,
-#     temperature=0,
-#     max_tokens=1500,
-#     top_p=0.95,
-#     frequency_penalty=0,
-#     presence_penalty=0,
-#     stop=None,
-#     response_format={ "type": "json_object" }
-#   )
-#   raw_response = response['choices'][0]['message']['content']
-#   # json_response = json.loads(raw_response)
-#   # print(json_response)
-
-# post-processing and evaluate results
+print("========LLM RESPONSES========")
+print(response.choices[0].message.content)
