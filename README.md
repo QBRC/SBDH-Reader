@@ -6,7 +6,7 @@ Social and behavioral determinants of health (SBDH) are increasingly recognized 
 - `conda create -n sbdh_reader python=3.9` creating a new conda env
 - `conda activate sbdh_reader`
 - `pip install -r requirements.txt` installs specific packages for the wrapper function
-- Note: Compatibility test done on the following Linux systems: `Red Hat Enterprise Linux 7.9`; 
+- Note: Compatibility test done on the following Linux systems: `Red Hat Enterprise Linux 7.9`; `Red Hat Enterprise Linux 9.6 (Plow)`
 
 ## Usage
 TL;DR: `python example_call.py` runs SBDH-Reader end-to-end, from free text to LLM's structured json output.
